@@ -24,11 +24,13 @@ export class Synapse {
         this.applySTDP();
     }
     applySTDP() {
-        if (Math.min(this.preTrace, this.postTrace) == 0)
-            return;
-        let w_change = (this.postTrace - this.preTrace) * 0.01 * this.ei;
+        // if (Math.min(this.preTrace, this.postTrace) <= 0.001 || this.ei == -1) return
+        // if (Math.min(this.preTrace, this.postTrace) <= 0.001) return
+        let w_change = (this.postTrace - this.preTrace) * this.ei;
+        w_change = this.ei == -1 ? w_change * 0.01 : w_change * 0.0001;
         let newWeight = this.weight + w_change;
-        this.weight = this.weight * newWeight <= 0 ? 0 : Math.abs(newWeight) > 1 ? this.ei : newWeight;
+        this.weight = this.ei * newWeight <= 0 ? 0 : Math.abs(newWeight) > 1 ? this.ei : newWeight;
+        // this.weight = this.weight * newWeight <= 0 ? 0 : Math.min(newWeight, 1)
     }
 }
 //# sourceMappingURL=Synapse.js.map
