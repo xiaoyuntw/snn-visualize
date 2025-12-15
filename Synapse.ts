@@ -26,7 +26,7 @@ export class Synapse {
     }
 
     onPreSpike (v: number) {
-        this.post.add(this.pre.getVoltage() * this.weight)
+        this.post.add(v * this.weight)
         this.preTrace = 1
     }
 
